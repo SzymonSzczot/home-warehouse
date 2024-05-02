@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from server.main import Base
+from server.config.database import Base
 
 
 class Item(Base):
