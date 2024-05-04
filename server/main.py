@@ -1,5 +1,8 @@
 import sys
 from os.path import dirname
+
+from starlette.staticfiles import StaticFiles
+
 sys.path.append(dirname(__file__))
 
 
@@ -16,6 +19,8 @@ app = FastAPI()
 @app.get("/healthcheck", response_model=dict)
 def healthcheck(skip: int = 0, limit: int = 100):
     return {"status": "ok"}
+
+app.mount("/media", StaticFiles(directory="media"), name="media")
 
 
 app.include_router(items_catalog_router, prefix="/api/items-catalog")

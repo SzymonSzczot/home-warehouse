@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi import Depends
 
 from server.items_catalog.application.schemas.categories import CategoryCreateSchema
 from server.items_catalog.application.schemas.categories import CategoryListSchema
@@ -17,8 +18,8 @@ async def read_items():
 
 
 @router.post("/", response_model=ItemListSchema)
-async def add_item(item: ItemCreateSchema) -> ItemListSchema:
-    item = ItemsCatalogRepository().add_item(item=item)
+async def add_item(item: ItemCreateSchema = Depends(ItemCreateSchema.as_form))-> ItemListSchema:
+    item = await ItemsCatalogRepository().add_item(item=item)
     return item
 
 @router.get("/categories", response_model=list[CategoryListSchema])

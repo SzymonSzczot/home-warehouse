@@ -2,7 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://user:passwd@warehouse-database/prod_db"
+from server.config.settings import get_settings
+
+settings = get_settings()
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.db_user}:{settings.db_password}@warehouse-database/prod_db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

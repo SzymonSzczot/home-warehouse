@@ -109,13 +109,14 @@ services:
     restart: always
     depends_on:
       - postgres
-
+    stdin_open: true # für pdb
+    tty: true # für pdb
 
   postgres:
     container_name: warehouse-database
     image: postgres:16.2
     ports:
-      - "5432:5444"
+      - "5444:5444"
     volumes:
       - "./postgres-data:/var/lib/postgresql/data"
     environment:
