@@ -107,6 +107,8 @@ services:
       - DEBUG=1
       - PYTHONPATH=/
     restart: always
+    depends_on:
+      - postgres
 
 
   postgres:

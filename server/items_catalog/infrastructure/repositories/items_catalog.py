@@ -1,7 +1,7 @@
-from typing import List
+import uuid
 
 from server.config.database import DbSession
-from server.items_catalog.application.schemas.items.list import ItemCreateSchema
+from server.items_catalog.application.schemas.items import ItemCreateSchema
 from server.items_catalog.infrastructure.models.items_catalog import Item
 
 
@@ -13,10 +13,10 @@ class ItemsCatalogRepository:
         with self.db as db:
             return db.query(Item).offset(skip).limit(limit).all()
 
-    def add_items(self, items: List[ItemCreateSchema]):
+    def add_item(self, item: ItemCreateSchema):
         with self.db as db:
-            for item in items:
-                db.add(item)
-                db.commit()
-                db.refresh(item)
-            return items
+            db_item = Item(id=uuid.uuid4(), **item.to_create())
+            db.add(db_item)
+            db.commit()
+            db.refresh(db_item)
+            return db_item
