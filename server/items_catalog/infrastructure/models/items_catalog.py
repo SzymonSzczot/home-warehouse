@@ -1,5 +1,4 @@
 import os
-import urllib
 from urllib.parse import urljoin
 
 from sqlalchemy import Column, String
@@ -18,7 +17,7 @@ class Item(Base):
     id = Column(UUID, primary_key=True, index=True)
     name = Column(String)
     image_url = Column(String)
-    description = Column(String)
+    description = Column(String, default="")
     category_id = Column(UUID, ForeignKey("items_catalog_category.id"))
     category = relationship(Category, back_populates="items")
 

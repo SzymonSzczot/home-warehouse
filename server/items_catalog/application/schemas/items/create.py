@@ -1,4 +1,3 @@
-import random
 import uuid
 from functools import cached_property
 from typing import Annotated
@@ -13,6 +12,7 @@ from pydantic import BaseModel
 
 class ItemCreateSchema(BaseModel):
     name: str
+    description: str
     image: Optional[UploadFile] = None
 
     def to_create(self):

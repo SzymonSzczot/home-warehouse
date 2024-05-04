@@ -1,0 +1,80 @@
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+
+  .item:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .item .text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .item .text-content h2 {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .item .text-content p {
+    margin-top: 10px;
+    color: #666;
+    font-size: 16px;
+  }
+form {
+  margin-top: 20px;
+}
+
+form input[type="text"], form input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#drop-area {
+  padding: 10px;
+  border: 2px dashed #ddd;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

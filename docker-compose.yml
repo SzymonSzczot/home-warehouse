@@ -100,9 +100,6 @@ services:
       - "./server:/server"
     ports:
       - "8000:8000"
-      - "1883:1883"
-      - "1884:1884"
-      - "9000:9000"
     environment:
       - DEBUG=1
       - PYTHONPATH=/
@@ -116,13 +113,24 @@ services:
     container_name: warehouse-database
     image: postgres:16.2
     ports:
-      - "5444:5444"
+      - "5432:5444"
     volumes:
       - "./postgres-data:/var/lib/postgresql/data"
     environment:
       POSTGRES_DB: prod_db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: passwd
+    restart: always
+
+  web:
+    container_name: warehouse-web
+    build: ./web
+    ports:
+      - "5173:5173"
+    volumes:
+      - "./web/src:/app/src"
+    depends_on:
+      - server
     restart: always
 
 networks:

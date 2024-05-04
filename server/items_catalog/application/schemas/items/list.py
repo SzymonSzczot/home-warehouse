@@ -12,6 +12,7 @@ from server import config
 class ItemListSchema(BaseModel):
     id: UUID
     name: str
+    description: str
     image_url: Optional[str] = Field(exclude=True)
 
     @computed_field

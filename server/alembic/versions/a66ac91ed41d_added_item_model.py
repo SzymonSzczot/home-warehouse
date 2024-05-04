@@ -24,7 +24,7 @@ def upgrade():
         'items_catalog_category',
         sa.Column('id', sa.UUID, primary_key=True),
         sa.Column('name', sa.String),
-        sa.Column('description', sa.String),
+        sa.Column('description', sa.String, default=""),
     )
 
     # Create items_catalog table
@@ -33,7 +33,7 @@ def upgrade():
         sa.Column('id', sa.UUID, primary_key=True),
         sa.Column('name', sa.String),
         sa.Column('image_url', sa.String),
-        sa.Column('description', sa.String),
+        sa.Column('description', sa.String, default=""),
         sa.Column('category_id', sa.UUID, sa.ForeignKey('items_catalog_category.id')),
     )
 

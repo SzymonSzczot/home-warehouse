@@ -22,6 +22,7 @@ async def add_item(item: ItemCreateSchema = Depends(ItemCreateSchema.as_form))->
     item = await ItemsCatalogRepository().add_item(item=item)
     return item
 
+
 @router.get("/categories", response_model=list[CategoryListSchema])
 async def read_categories():
     return ItemsCatalogCategoryRepository().get_categories()
