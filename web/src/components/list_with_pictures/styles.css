@@ -13,8 +13,9 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
-    width: 80%;
+    width: 100%;
     max-width: 600px;
+    min-width: 600px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
   }
@@ -22,8 +23,7 @@
   .item:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-
-  .item img {
+  .item img  {
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -41,6 +41,7 @@
     color: #333;
     font-size: 20px;
     font-weight: bold;
+    max-width: 100%;
   }
 
   .item .text-content p {
@@ -77,4 +78,17 @@ button {
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.icon-placeholder {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+  text-align: center;
+    font-size: 50px;
+}
+.text-content h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

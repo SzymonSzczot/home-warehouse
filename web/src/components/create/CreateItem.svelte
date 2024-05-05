@@ -1,6 +1,10 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+
   let showForm = false;
   let itemName = '';
+  let itemDescription = '';
   let itemPicture = null;
   let previewUrl = '';
 
@@ -9,23 +13,22 @@
 
     const formData = new FormData();
     formData.append('name', itemName);
+    formData.append('description', itemDescription);
     formData.append('image', itemPicture);
 
     const response = await fetch('http://localhost:8000/api/items-catalog/', {
       method: 'POST',
       body: formData,
-
     });
 
     if (response.ok) {
-      // handle successful response
       const item = await response.json();
       console.log(item);
+      dispatch('itemCreated', item);
     } else {
-      // handle error
       console.error('Error:', response.status);
-    }}
-
+    }
+  };
   const toggleForm = () => {
     showForm = !showForm;
   };
@@ -66,18 +69,17 @@
   {#if showForm}
     <form on:submit|preventDefault={handleSubmit}>
       <input type="text" bind:value={itemName} placeholder="Item Name" required/>
+      <input type="text" bind:value={itemDescription} placeholder="Item description"/>
       <div id="drop-area">
         <p>Drag and drop a file here</p>
         <div style="display:flex;;">
-          <input type="file" bind:files={itemPicture} on:change={handleFileChange}
-               required/>
+          <input type="file" bind:files={itemPicture} on:change={handleFileChange}/>
           {#if previewUrl}
             <img src={previewUrl} alt="Preview"/>
           {/if}
         </div>
       </div>
       <div>
-
       <button type="submit">Submit</button>
       <button type="button" on:click={toggleForm}>Cancel</button>
       </div>

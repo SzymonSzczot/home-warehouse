@@ -17,7 +17,8 @@ class ItemsCatalogRepository:
 
     async def add_item(self, item: ItemCreateSchema):
         with self.db as db:
-            file_name = await save_upload_file(filename=item.image_filename, upload_file=item.image, dest_folder=config.MEDIA_DIR)
+            if item.image is not None:
+                await save_upload_file(filename=item.image_filename, upload_file=item.image, dest_folder=config.MEDIA_DIR)
             db_item = Item(id=uuid.uuid4(), **item.to_create())
             db.add(db_item)
             db.commit()
