@@ -14,3 +14,11 @@ async def save_upload_file(*, filename: str, upload_file: UploadFile, dest_folde
 
     finally:
         await upload_file.close()
+
+
+
+async def delete_file(file_path: str):
+    try:
+        os.remove(file_path)
+    except FileNotFoundError:
+        pass

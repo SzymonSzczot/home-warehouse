@@ -4,6 +4,7 @@ from server import config
 from server.config.database import DbSession
 from server.items_catalog.application.schemas.items import ItemCreateSchema
 from server.items_catalog.infrastructure.models.items_catalog import Item
+from server.utils.files import delete_file
 from server.utils.files import save_upload_file
 
 
@@ -24,3 +25,11 @@ class ItemsCatalogRepository:
             db.commit()
             db.refresh(db_item)
             return db_item
+
+    async def delete_item(self, item_id: uuid.UUID) -> None:
+        with self.db as db:
+            item = db.query(Item).filter(Item.id == item_id).first()
+            if item.image_url:
+                await delete_file(file_path=item.get_image_dir())
+            db.delete(item)
+            db.commit()

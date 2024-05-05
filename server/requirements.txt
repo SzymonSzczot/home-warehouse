@@ -14,3 +14,4 @@ psycopg2-binary==2.9.9
 alembic==1.13.1
 python-multipart
 pydantic-settings
+logstash

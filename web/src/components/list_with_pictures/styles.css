@@ -92,3 +92,18 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.item-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.delete-button {
+  position: absolute;
+  right: 50px; /* Adjust this value to position the button from the right */
+  top: 50%; /* Adjust this value to position the button from the top */
+  color: red;
+  cursor: pointer;
+}

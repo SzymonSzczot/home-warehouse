@@ -1,9 +1,10 @@
-<!-- ItemList.svelte -->
 <script>
   import CreateItem from "../create/CreateItem.svelte";
-
+  import LoadingPlaceholder from "../utils/LoadingPlaceholder.svelte";
   import { onMount } from 'svelte';
   export let items = [];
+
+  let loading = true;
 
   onMount(async () => {
     try {
@@ -12,10 +13,12 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       items = await response.json();
+      loading = false;
     } catch (error) {
       console.error('Fetch error:', error);
     }
   });
+
   const handleItemCreated = (event) => {
     items = [...items, event.detail];
   };
@@ -34,41 +37,32 @@
     }
   };
 </script>
+
 <style>
   @import './styles.css';
-
-.item-container {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.delete-button {
-  position: absolute;
-  right: 50px; /* Adjust this value to position the button from the right */
-  top: 50%; /* Adjust this value to position the button from the top */
-  color: red;
-  cursor: pointer;
-}
 </style>
 
 <section>
-  {#each items as item (item.id)}
-    <div class="item-container">
-      <div class="item">
-        {#if item.picture_url}
-          <img src={item.picture_url} alt={item.name} />
-        {:else}
-        {/if}
-          <div class="fas fa-image icon-placeholder"></div>
-        <div class="text-content">
-          <h2>{item.name}</h2>
-          <p>{item.description}</p>
+  {#if loading}
+    <LoadingPlaceholder />
+  {:else}
+    <CreateItem on:itemCreated={handleItemCreated}/>
+    {#each items as item (item.id)}
+      <div class="item-container">
+        <div class="item">
+          {#if item.picture_url}
+            <img src={item.picture_url} alt={item.name} />
+          {:else}
+          {/if}
+            <div class="fas fa-image icon-placeholder"></div>
+          <div class="text-content">
+            <h2>{item.name}</h2>
+            <p>{item.description}</p>
+          </div>
+          <i class="fas fa-times delete-button" on:click={() => handleItemDelete(item.id)}></i>
         </div>
-        <i class="fas fa-times delete-button" on:click={() => handleItemDelete(item.id)}></i>
       </div>
-    </div>
-  {/each}
-  <CreateItem on:itemCreated={handleItemCreated}/>
+    {/each}
+
+  {/if}
 </section>
