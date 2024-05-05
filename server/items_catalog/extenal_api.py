@@ -1,8 +1,10 @@
+import socket
 from uuid import UUID
 
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import Response
+from logstash import TCPLogstashHandler
 from starlette import status
 
 from server.items_catalog.application.schemas.categories import CategoryCreateSchema
@@ -15,11 +17,12 @@ from server.items_catalog.infrastructure.repositories.items_catalog import Items
 import logstash
 router = APIRouter()
 import logging
-host = 'logstash'  # Replace with your Logstash host
-port = 50000  # Replace with your Logstash port
+host = 'logstash-main'
+port = 50000
 
 logger = logging.getLogger('python-logstash-logger')
 logger.setLevel(logging.INFO)
+
 logger.addHandler(logstash.TCPLogstashHandler(host=host, port=port))
 
 # Add a standard output handler
@@ -34,7 +37,7 @@ async def read_items():
 
 @router.post("/", response_model=ItemListSchema)
 async def add_item(item: ItemCreateSchema = Depends(ItemCreateSchema.as_form))-> ItemListSchema:
-    logger.info('python-logstash: test logstash info message.')
+    logger.info(f'test {item.name}')
     item = await ItemsCatalogRepository().add_item(item=item)
     return item
 
